@@ -42,6 +42,6 @@ while True:
   print("----------------START----------------")
 
   for (val, length) in command:
-    print(f"Value {val}, length {length}")
+    print("Value %d, length %d" % val, length)
 
   print("-----------------END-----------------")
