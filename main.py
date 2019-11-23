@@ -42,7 +42,7 @@ while True:
   print("----------------START----------------")
 
   for i in range(len(command)):
-    if (command[i][0]):
+    if command[i][0] == 0:
       print(f"on {command[i][1]}, off {command[i + 1][1]}")
 
   print("-----------------END-----------------")
