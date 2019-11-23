@@ -43,6 +43,17 @@ while True:
 
   for i in range(len(command) - 1):
     if command[i][0] == 0:
-      print(f"on {command[i][1]}, off {command[i + 1][1]}")
+      on, off = command[i][1], command[i+1][1]
+      if on < SHORT:
+        if off < SHORT:
+          print(0)
+        elif off < MEDIUM:
+          print(1)
+        elif off < LONG:
+          print("A")
+        else:
+          print("B")
+      elif on > LONG and off > LONG:
+        print("C")
 
   print("-----------------END-----------------")
