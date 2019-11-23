@@ -30,7 +30,7 @@ while True:
       start = now
       command.append((prev, pulse.microseconds))
 
-    if ones > LONGEST:
+    if ones > LONGEST*10:
       break
 
     if val: ones += 1
