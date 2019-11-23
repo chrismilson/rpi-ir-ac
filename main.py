@@ -39,29 +39,17 @@ while True:
     prev = val
     val = GPIO.input(PIN)
 
-  print("----------------START----------------")
+  print("--------------START-RAW----------------")
 
-  binary = ""
-  for i in range(len(command) - 1):
-    if command[i][0] == 0:
-      on, off = command[i][1], command[i+1][1]
-      if on < SHORT:
-        if off < SHORT:
-          binary += "0"
-        elif off < MEDIUM:
-          binary += "1"
-        elif off < LONG:
-          print(binary)
-          binary = ""
-          print("A")
-        else:
-          print(binary)
-          binary = ""
-          print("B")
-      elif on > LONG and off > LONG:
-        print(binary)
-        binary = ""
-        print("C")
+  for i in range(len(command)):
+    if command[i][0]:
+      on, off = command[i][1], command[i + 1][1]
+      print(f"pulse {on}, space {off}")
 
-  print(binary)
-  print("-----------------END-----------------")
+  print("---------------END-RAW-----------------")
+
+  # print("----------------START----------------")
+
+  
+
+  # print("-----------------END-----------------")
