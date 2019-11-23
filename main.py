@@ -41,19 +41,26 @@ while True:
 
   print("----------------START----------------")
 
+  binary = ""
   for i in range(len(command) - 1):
     if command[i][0] == 0:
       on, off = command[i][1], command[i+1][1]
       if on < SHORT:
         if off < SHORT:
-          print(0)
+          binary += "0"
         elif off < MEDIUM:
-          print(1)
+          binary += "1"
         elif off < LONG:
+          print(binary)
+          binary = ""
           print("A")
         else:
+          print(binary)
+          binary = ""
           print("B")
       elif on > LONG and off > LONG:
+        print(binary)
+        binary = ""
         print("C")
 
   print("-----------------END-----------------")
