@@ -13,9 +13,8 @@ SHORT, MEDIUM, LONG, LONGEST = 600, 1500, 24000, 30000
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(PIN, GPIO.IN)
 
-val = 1
-
 while True:
+  val = 1
   while val:
     val = GPIO.input(PIN)
   
@@ -31,7 +30,8 @@ while True:
       start = now
       command.append((prev, pulse.microseconds))
 
-    if ones > 10000: break
+    if ones > 10000:
+      break
 
     if val: ones += 1
     else: ones = 0
