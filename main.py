@@ -49,7 +49,7 @@ while True:
         if off < SHORT:
           binary += "0 "
         else:
-          binary += "1"
+          binary += "1 "
       # print(f"pulse {on}, space {off}")
   
   print(binary)
