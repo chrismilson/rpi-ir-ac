@@ -63,4 +63,5 @@ while True:
         binary = ""
         print("C")
 
+  print(binary)
   print("-----------------END-----------------")
