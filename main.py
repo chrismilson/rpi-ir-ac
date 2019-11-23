@@ -8,7 +8,7 @@ from datetime import datetime
 
 PIN = 16
 
-SHORT, MEDIUM, LONG, LONGEST = 600, 1500, 24000, 30000
+SHORT, MEDIUM, LONG, LONGEST = 600, 3000, 24000, 30000
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(PIN, GPIO.IN)
@@ -41,10 +41,18 @@ while True:
 
   print("--------------START-RAW----------------")
 
-  for i in range(len(command)):
-    if command[i][0]:
+  binary = ""
+  for i in range(len(command) - 1):
+    if command[i][0] == 0:
       on, off = command[i][1], command[i + 1][1]
+      if on < SHORT:
+        if off < SHORT:
+          binary += 0
+        else:
+          binary += 1
       print(f"pulse {on}, space {off}")
+  
+  print(binary)
 
   print("---------------END-RAW-----------------")
 
