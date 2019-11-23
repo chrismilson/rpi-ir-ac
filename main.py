@@ -50,7 +50,7 @@ while True:
           binary += "0"
         else:
           binary += "1"
-      print(f"pulse {on}, space {off}")
+      # print(f"pulse {on}, space {off}")
   
   print(binary)
 
