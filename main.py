@@ -47,9 +47,9 @@ while True:
       on, off = command[i][1], command[i + 1][1]
       if on < SHORT:
         if off < SHORT:
-          binary += 0
+          binary += "0"
         else:
-          binary += 1
+          binary += "1"
       print(f"pulse {on}, space {off}")
   
   print(binary)
