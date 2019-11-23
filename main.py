@@ -30,7 +30,7 @@ while True:
       start = now
       command.append((prev, pulse.microseconds))
 
-    if ones > 10000:
+    if ones > LONGEST:
       break
 
     if val: ones += 1
@@ -41,7 +41,8 @@ while True:
 
   print("----------------START----------------")
 
-  for (val, length) in command:
-    print("Value %d, length %d" % (val, length))
+  for i in range(len(command)):
+    if (command[i][0]):
+      print(f"on {command[i][1]}, off {command[i + 1][1]}")
 
   print("-----------------END-----------------")
