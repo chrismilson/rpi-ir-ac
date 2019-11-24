@@ -9,16 +9,17 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup(PIN, GPIO.OUT, initial = GPIO.HIGH)
 sleep(3/100)
 GPIO.output(PIN, GPIO.LOW)
+sleep(3/100)
 
 def txBit(bit):
   print(f"Sending {bit}")
   GPIO.output(PIN, GPIO.HIGH)
+  sleep(SHORT / 1000000)
+  GPIO.output(PIN, GPIO.LOW)
   if bit:
     sleep(SHORT / 1000000)
   else:
     sleep(LONG / 1000000)
-  GPIO.output(PIN, GPIO.LOW)
-  sleep(SHORT / 1000000)
 
 data = [
   0xFF,
