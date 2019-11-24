@@ -14,11 +14,11 @@ def txBit(bit):
   print(f"Sending {bit}")
   GPIO.output(PIN, GPIO.HIGH)
   if bit:
-    sleep(SHORT / 1000)
+    sleep(SHORT / 1000000)
   else:
-    sleep(LONG / 1000)
+    sleep(LONG / 1000000)
   GPIO.output(PIN, GPIO.LOW)
-  sleep(SHORT / 1000)
+  sleep(SHORT / 1000000)
 
 data = [
   0xFF,
