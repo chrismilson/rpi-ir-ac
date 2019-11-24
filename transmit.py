@@ -3,32 +3,43 @@ from time import sleep
 
 PIN = 15 # GPIO 22
 SHORT, LONG = 400, 1300
+SHORT /= 1000000
+LONG /= 1000000
 
 GPIO.setmode(GPIO.BOARD)
 
-GPIO.setup(PIN, GPIO.OUT, initial = GPIO.HIGH)
-sleep(3/100)
-GPIO.output(PIN, GPIO.LOW)
-sleep(3/100)
+GPIO.setup(PIN, GPIO.OUT)
 
 def txBit(bit):
-  print(f"Sending {bit}")
   GPIO.output(PIN, GPIO.HIGH)
-  sleep(SHORT / 1000000)
+  sleep(SHORT)
   GPIO.output(PIN, GPIO.LOW)
-  if bit:
-    sleep(SHORT / 1000000)
-  else:
-    sleep(LONG / 1000000)
+  sleep(SHORT * bit + LONG * (bit ^ 1))
 
 data = [
   0xFF,
-  0x00,
   0xFF,
-  0x00
+  0,
+  0,
+  0xFF,
+  0xFF,
+  0,
+  0,
+  0xFF,
+  0xFF
 ]
 
-for i in range(len(data)):
-  byte = data[i]
-  for j in range(8):
-    txBit((byte >> j) & 1)
+GPIO.output(PIN, GPIO.HIGH)
+sleep(.03)
+GPIO.output(PIN, GPIO.LOW)
+sleep(.05)
+GPIO.output(PIN, GPIO.HIGH)
+sleep(.03)
+GPIO.output(PIN, GPIO.LOW)
+sleep(.02)
+
+for val in data:
+  for i in range(7, 1, -1):
+    txBit((val >> i) & 1)
+
+GPIO.cleanup()
