@@ -5,9 +5,10 @@ PIN = 15 # GPIO 22
 SHORT, LONG = 400, 1300
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(PIN, GPIO.OUT)
 
-
+GPIO.setup(PIN, GPIO.OUT, initial = GPIO.HIGH)
+sleep(3/100)
+GPIO.output(PIN, GPIO.LOW)
 
 def txBit(bit):
   print(f"Sending {bit}")
