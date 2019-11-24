@@ -7,7 +7,10 @@ SHORT, LONG = 400, 1300
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(PIN, GPIO.OUT)
 
+
+
 def txBit(bit):
+  print(f"Sending {bit}")
   GPIO.output(PIN, GPIO.HIGH)
   if bit:
     sleep(SHORT / 1000000)
