@@ -26,6 +26,6 @@ class Remote:
         subsequent_indent="      "
       )) + " {}\n".format(self.LONG)
     s += "  end raw_codes\n"
-    s += "  end remote\n"
+    s += "end remote\n"
 
     return s
