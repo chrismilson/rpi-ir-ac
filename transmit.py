@@ -57,4 +57,4 @@ c = commandFromDetails(
 )
 
 # print(" ".join(["1" if b else "0" for b in c]))
-# print(Remote("aircon").add(c).getConf())
+print(Remote("aircon").add(c).getConf())
