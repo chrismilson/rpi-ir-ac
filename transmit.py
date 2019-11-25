@@ -34,17 +34,18 @@ def commandFromDetails(*,
   temperature = 24,
   mode = "heat",
   fan = "auto"):
-  c = Command([0x80, 0x08, 0x00], repeatWithInvert=False)
-  c += Command([
+  bytes = [
     0x02, 0xFF, 0x33,
-    0xFF, # Check byte?
-    0xFF, # Check byte?
+    0x00, # Check byte?
+    0x00, # Check byte?
     tempByte(temperature),
     0x00, 0x00, 0x00, 0x00, 0x00,
     modeByte(mode) << 4 | fanByte(fan),
     0x8F if power == "on" else 0x87,
     0x00, 0x00, 0x01, 0xC0, 0x80, 0x11, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF
-  ])
+  ]
+  c = Command([0x80, 0x08, 0x00], repeatWithInvert=False)
+  c += Command(bytes)
   c.name = "{}{}{}{}".format(power, temperature, mode, fan)
   return c
 
@@ -56,4 +57,4 @@ c = commandFromDetails(
 )
 
 # print(" ".join(["1" if b else "0" for b in c]))
-print(Remote("aircon").add(c).getConf())
+# print(Remote("aircon").add(c).getConf())
