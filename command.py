@@ -12,9 +12,9 @@ class Command:
     for bit in self:
       arr.append(short)
       if bit:
-        arr.append(short)
-      else:
         arr.append(long)
+      else:
+        arr.append(short)
     return arr
 
   def __add__(self, other):
