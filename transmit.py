@@ -1,47 +1,59 @@
-import RPi.GPIO as GPIO
-from time import sleep
-from sys import argv
+from command import Command
+from remote import Remote
 
-PIN = 15 # GPIO 22
-SHORT, LONG = int(argv[1]), int(argv[2])
+def tempByte(val):
+  i = 0
+  byte = 0
+  while i < 6:
+    byte = (byte << 1) | ((val >> i) & 1)
+    i += 1
+  return byte
 
-SHORT /= 1000000
-LONG /= 1000000
+def modeByte(mode):
+  if mode == "heat":
+    return 0x6
+  elif mode == "cool":
+    return 0xC
+  return 0x00 # default to dry
 
-GPIO.setmode(GPIO.BOARD)
+def fanByte(fan):
+  if fan == 1:
+    return 0x8
+  elif fan == 2:
+    return 0x4
+  elif fan == 3:
+    return 0xC
+  elif fan == 4:
+    return 0x2
+  elif fan == 5:
+    return 0x6
+  return 0xA # default to auto
 
-GPIO.setup(PIN, GPIO.OUT)
+def commandFromDetails(*,
+  power = "on",
+  temperature = 24,
+  mode = "heat",
+  fan = "auto"):
+  c = Command([0x80, 0x08, 0x00], repeatWithInvert=False)
+  c += Command([
+    0x02, 0xFF, 0x33,
+    0xFF, # Check byte?
+    0xFF, # Check byte?
+    tempByte(temperature),
+    0x00, 0x00, 0x00, 0x00, 0x00,
+    modeByte(mode) << 4 | fanByte(fan),
+    0x8F if power == "on" else 0x87,
+    0x00, 0x00, 0x01, 0xC0, 0x80, 0x11, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF
+  ])
+  c.name = "{}{}{}{}".format(power, temperature, mode, fan)
+  return c
 
-def txBit(bit):
-  GPIO.output(PIN, GPIO.HIGH)
-  sleep(SHORT)
-  GPIO.output(PIN, GPIO.LOW)
-  sleep(SHORT * bit + LONG * (bit ^ 1))
+c = commandFromDetails(
+  power = "on",
+  temperature = 27,
+  mode = "heat",
+  fan = "auto"
+)
 
-data = [
-  0xFF,
-  0xFF,
-  0,
-  0,
-  0xFF,
-  0xFF,
-  0,
-  0,
-  0xFF,
-  0xFF
-]
-
-GPIO.output(PIN, GPIO.HIGH)
-sleep(.03)
-GPIO.output(PIN, GPIO.LOW)
-sleep(.05)
-GPIO.output(PIN, GPIO.HIGH)
-sleep(.03)
-GPIO.output(PIN, GPIO.LOW)
-sleep(.02)
-
-for val in data:
-  for i in range(7, 1, -1):
-    txBit((val >> i) & 1)
-
-GPIO.cleanup()
+# print(" ".join(["1" if b else "0" for b in c]))
+print(Remote("aircon").add(c).getConf())
