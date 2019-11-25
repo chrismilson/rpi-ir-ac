@@ -57,4 +57,11 @@ c = commandFromDetails(
 )
 
 # print(" ".join(["1" if b else "0" for b in c]))
-print(Remote("aircon").add(c).getConf())
+# print(Remote("aircon").add(c).getConf())
+
+SHORT, LONG = "400", "1200"
+for bit in c:
+  print(f"pulse {SHORT}")
+  if bit: print(f"space {LONG}")
+  else: print(f"space {SHORT}")
+print(f"pulse {SHORT}")

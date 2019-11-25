@@ -15,7 +15,7 @@ class Command:
         arr.append(short)
       else:
         arr.append(long)
-    return " ".join(arr)
+    return arr
 
   def __add__(self, other):
     return Command(self.bytes + other.bytes, repeatWithInvert=False)

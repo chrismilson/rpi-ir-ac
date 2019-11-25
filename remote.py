@@ -20,7 +20,7 @@ class Remote:
     for command in self.commands:
       s += "    name {}\n".format(command.name)
       s += "\n".join(wrap(
-        command.pulseSpace(self.SHORT, self.LONG),
+        " ".join(command.pulseSpace(self.SHORT, self.LONG, None, None)),
         80,
         initial_indent="      ",
         subsequent_indent="      "
