@@ -24,7 +24,7 @@ class Remote:
         80,
         initial_indent="      ",
         subsequent_indent="      "
-      )) + "{}\n".format(self.LONG)
+      )) + " {}\n".format(self.LONG)
     s += "  end raw_codes\n"
     s += "  end remote\n"
 
