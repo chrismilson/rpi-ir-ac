@@ -29,5 +29,6 @@ def sendCommand(command):
   sleep(1600 / MICRO)
   ir.start(0)
 
-
 sendCommand(Command.commandFromDetails("on", "heat", 26, "auto"))
+
+GPIO.cleanup()
