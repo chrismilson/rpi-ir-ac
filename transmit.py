@@ -14,7 +14,7 @@ MICRO = 1000000
 SHORT, LONG = 400, 1200
 
 def txBit(bit):
-  ir.start(50)
+  ir.start(33)
   sleep(SHORT / MICRO)
   ir.start(0)
   sleep((SHORT * bit + LONG * (bit ^ 1)) / MICRO)
