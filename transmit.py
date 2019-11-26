@@ -17,15 +17,17 @@ def txBit(bit):
   ir.start(50)
   sleep(SHORT / MICRO)
   ir.start(0)
-  if bit: sleep(LONG / MICRO)
-  else: sleep(SHORT / MICRO)
+  sleep((SHORT * bit + LONG * (bit ^ 1)) / MICRO)
 
 def sendCommand(command):
   ir.start(50)
   sleep(30000 / MICRO)
   ir.start(0)
   sleep(16000 / MICRO)
-  for bit in command:
-    txBit(bit)
+  for bit in command: txBit(bit)
+  ir.start(50)
+  sleep(1600 / MICRO)
+  ir.start(0)
+
 
 sendCommand(Command.commandFromDetails("on", "heat", 26, "auto"))
