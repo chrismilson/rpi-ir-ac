@@ -2,10 +2,11 @@ import pigpio
 from time import sleep
 from command import Command
 
-SHORT, LONG = 400, 1200
 MICRO = 1000000
+SHORT, LONG = 400 / MICRO, 1200 / MICRO
 PIN = 22
 FREQ = 38000
+
 pi = pigpio.pi()
 pi.set_mode(PIN, pigpio.OUTPUT)
 
@@ -13,9 +14,9 @@ pi.set_PWM_frequency(PIN, FREQ)
 
 def txBit(bit):
   pi.set_PWM_dutycycle(PIN, 100)
-  sleep(SHORT / MICRO)
+  sleep(SHORT)
   pi.set_PWM_dutycycle(PIN, 0)
-  sleep((SHORT * bit + LONG * (bit ^ 1)) / MICRO)
+  sleep(SHORT * bit + LONG * (bit ^ 1))
 
 def sendCommand(command):
   pi.set_PWM_dutycycle(PIN, 100)
