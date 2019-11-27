@@ -27,4 +27,5 @@ def sendCommand(command):
   sleep(1600 / MICRO)
   pi.set_PWM_dutycycle(PIN, 0)
 
-sendCommand(Command.commandFromDetails("on", "heat", 26, "auto"))
+# sendCommand(Command.commandFromDetails("on", "heat", 26, "auto"))
+sendCommand(Command([0x00] * 10))
