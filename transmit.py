@@ -1,34 +1,30 @@
-import RPi.GPIO as GPIO
+import pigpio
 from time import sleep
 from command import Command
 
-PIN = 15
-FREQ = 38000
-
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(PIN, GPIO.OUT)
-
-ir = GPIO.PWM(PIN, FREQ)
-
-MICRO = 1000000
 SHORT, LONG = 400, 1200
+MICRO = 1000000
+PIN = 22
+FREQ = 38000
+pi = pigpio.pi()
+pi.set_mode(PIN, pigpio.OUTPUT)
+
+pi.set_PWM_frequency(PIN, FREQ)
 
 def txBit(bit):
-  ir.start(33)
+  pi.set_PWM_dutycycle(PIN, 100)
   sleep(SHORT / MICRO)
-  ir.start(0)
+  pi.set_PWM_dutycycle(PIN, 0)
   sleep((SHORT * bit + LONG * (bit ^ 1)) / MICRO)
 
 def sendCommand(command):
-  ir.start(50)
+  pi.set_PWM_dutycycle(PIN, 100)
   sleep(30000 / MICRO)
-  ir.start(0)
+  pi.set_PWM_dutycycle(PIN, 0)
   sleep(16000 / MICRO)
   for bit in command: txBit(bit)
-  ir.start(50)
+  pi.set_PWM_dutycycle(PIN, 100)
   sleep(1600 / MICRO)
-  ir.start(0)
+  pi.set_PWM_dutycycle(PIN, 0)
 
 sendCommand(Command.commandFromDetails("on", "heat", 26, "auto"))
-
-GPIO.cleanup()
