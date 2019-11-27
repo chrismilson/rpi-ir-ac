@@ -3,7 +3,7 @@ from time import sleep
 from command import Command
 
 MICRO = 1000000
-SHORT, LONG = 400 / MICRO, 1200 / MICRO
+SHORT, LONG = 200 / MICRO, 1200 / MICRO
 PIN = 22
 FREQ = 38000
 
@@ -14,7 +14,7 @@ pi.set_PWM_frequency(PIN, FREQ)
 
 def txBit(bit):
   pi.set_PWM_dutycycle(PIN, 100)
-  sleep(SHORT)
+  sleep(SHORT * 1 + LONG * (1 ^ 1))
   pi.set_PWM_dutycycle(PIN, 0)
   sleep(SHORT * bit + LONG * (bit ^ 1))
 
